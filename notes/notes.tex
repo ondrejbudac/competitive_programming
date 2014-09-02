@@ -1,0 +1,91 @@
+
+\documentclass[a4paper, onesided]{article}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+%----------------------------------------------------------------------------------------
+\usepackage[T1]{fontenc}
+%\usepackage{beramono}
+\usepackage{lmodern}
+
+\usepackage{listings} % Required for inserting code snippets
+\usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
+
+%\usepackage{showframe}
+
+
+\definecolor{DarkGreen}{rgb}{0.0,0.3,0.0} % Comment color
+\definecolor{highlight}{RGB}{255,251,204} % Code highlight color
+
+\lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
+language={C++}, % Detects keywords, comments, strings, functions, etc for the language specified
+%backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
+basicstyle=\footnotesize\ttfamily, % The default font size and style of the code
+breakatwhitespace=false, % If true, only allows line breaks at white space
+breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
+captionpos=b, % Sets the caption position: b for bottom; t for top
+commentstyle=\footnotesize\ttfamily\color{DarkGreen}, % \usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
+deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
+%escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
+firstnumber=1, % Line numbers begin at line 1
+frame=leftline, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
+frameround=ffff, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
+keywordstyle=\footnotesize\ttfamily\color{Blue}\bfseries, % Functions are bold and blue
+morekeywords={}, % Add any functions no included by default here separated by commas
+numbers=left, % Location of line numbers, can take the values of: none, left, right
+numbersep=10pt, % Distance of line numbers from the code box
+numberstyle=\footnotesize\ttfamily\color{Black}, % Style used for line numbers
+rulecolor=\color{black}, % Frame border color
+showstringspaces=false, % Don't put marks in string spaces
+showtabs=false, % Display tabs in the code as lines
+stepnumber=1, % The step distance between line numbers, i.e. how often will lines be numbered
+stringstyle=\color{Purple}, % Strings are purple
+tabsize=2, % Number of spaces per tab in the code
+}
+
+% Create a command to cleanly insert a snippet with the style above anywhere in the document
+\newcommand{\insertcode}[2]{\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1,style=Style1]{#1}\end{itemize}} % The first argument is the script location/filename and the second is a caption for the listing
+
+%----------------------------------------------------------------------------------------
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+\section{Floyd-Warshall algorithm}
+It is a graph analysis algorithm for finding shortest paths in a weighted graph with positive or negative edge weights with no negative cycles.
+A single execution of the algorithm will find the lengths (summed weights) of the shortest paths between all pairs of vertices, though it does not return details of the paths themselves.
+
+The Floyd-Warshall algorithm compares all possible paths through the graph between each pair of vertices.
+It is able to do this with $\Theta(|V|^3)$ comparisons in a graph. 
+This is remarkable considering that there may be up to $\Omega(|V|^2)$ edges in the graph, and every combination of edges is tested. 
+It does so by incrementally improving an estimate on the shortest path between two vertices, until the estimate is optimal. 
+
+\insertcode{"codes/floyd_warshall.cpp"}{A C++ code for the Floyd-Warshall algorithm} % The first argument is the script location/filename and the second is a caption for the listing
+
+To detect negative cycles using the Floyd-Warshall algorithm, one can inspect the diagonal of the path matrix, and the presence of a negative number indicates that the graph contains at least one negative cycle.
+
+\subsection{Minimal path reconstruction} 
+With simple modifications, it is possible to create a method to reconstruct the actual path between any two endpoint vertices. 
+The Shortest-path tree can be calculated for each node in $\Theta(|E|)$ time using $\Theta(|V|)$ memory to store each tree which allows us to efficiently reconstruct a path from any two connected vertices.
+
+\insertcode{"codes/floyd_warshall_reconstruct.cpp"}{A C++ code for the Floyd-Warshall algorithm with information about the minimal path.} 
+
+\subsection{Widest path problem}
+In graph algorithms, the \emph{widest path problem}, also known as the \emph{bottleneck shortest path problem} or the \emph{maximum capacity path problem}, is the problem of finding a path between two designated vertices in a weighted graph, maximizing the weight of the minimum-weight edge in the path.
+The Floyd-Warshall algorithm can be applied to solve this problem with minor modifications.
+One has to reverse the inequality and the addition operation is replaced by the minimum operation.
+
+\insertcode{"codes/floyd_warshall_routing.cpp"}{A C++ code for the Floyd-Warshall algorithm used for optimal routing in a constrained network.} 
+
+%----------------------------------------------------------------------------------------
+
+\section{Bitmask tricks}
+
+\insertcode{"codes/list_subsets.cpp"}{A bitmask trick to list all the subsets of a set without recursion.} 
+
+
+\end{document}
