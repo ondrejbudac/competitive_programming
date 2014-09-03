@@ -1,4 +1,3 @@
-
 \documentclass[a4paper, onesided]{article}
 
 \addtolength{\oddsidemargin}{-.875in}
@@ -11,7 +10,6 @@
 \setlength{\parindent}{0pt}
 %----------------------------------------------------------------------------------------
 \usepackage[T1]{fontenc}
-%\usepackage{beramono}
 \usepackage{lmodern}
 
 \usepackage{listings} % Required for inserting code snippets
@@ -38,8 +36,8 @@ deletekeywords={}, % If you want to delete any keywords from the current languag
 firstnumber=1, % Line numbers begin at line 1
 frame=leftline, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
 frameround=ffff, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
-keywordstyle=\footnotesize\ttfamily\color{Blue}\bfseries, % Functions are bold and blue
-morekeywords={}, % Add any functions no included by default here separated by commas
+keywordstyle=\footnotesize\ttfamily\color{Green}\bfseries, % Functions are bold and blue
+morekeywords={__int64}, % Add any functions no included by default here separated by commas
 numbers=left, % Location of line numbers, can take the values of: none, left, right
 numbersep=10pt, % Distance of line numbers from the code box
 numberstyle=\footnotesize\ttfamily\color{Black}, % Style used for line numbers
@@ -103,6 +101,10 @@ Integers can represent sets. Let $N \geq 0$ and cosider all integers in $\{ 0, 1
 {\lstinline[style=Style1]+(A & 1 << i) != 0+} & tests if an element is in the set\\
 \end{tabular}
 
+To get the greatest element of {\lstinline[style=Style1]!A!} one can use a function.
+
+\insertcode{"codes/highest_set_bit.cpp"}{Find the highest set bit of a given bitmask.} 
+
 To iterate over all subsets of the set ${0, 1, 2, \ldots, N-1}$ we can use the following code.
 
 \insertcode{"codes/list_subsets.cpp"}{A bitmask trick to list all the subsets without recursion.} 
@@ -110,5 +112,16 @@ To iterate over all subsets of the set ${0, 1, 2, \ldots, N-1}$ we can use the f
 To iterate over all subsets of a set representet by a bitmask we can modify this algorithm to get 
 
 \insertcode{"codes/list_subsets_of_bitmask.cpp"}{A bitmask trick to list all the subsets of a set given by a bitmask without recursion.}
+
+When dealing with 64-bit bitmasks it is necessary to be careful with the types and use {\lstinline[style=Style1]!1LL!} instead of {\lstinline[style=Style1]!1!} in all the circumstances. Indeed {\lstinline[style=Style1]!1 << 62 = 0!} and {\lstinline[style=Style1]!1LL << 62 = 4611686018427387904!}.
+
+%----------------------------------------------------------------------------------------
+
+\section{Gaussian elimination}
+Given a set of non-negative integers $\{ a_0, a_1, \ldots, a_{N-1} \}$, find a subset that has the highest value when bitwise xor is applied to all its elements.
+We perform a complete Gaussian elimination and then xor the basis vectors to get the maximum.
+We keep the track of the inverse transformation of the basis in bitmasks to easily reconstruct the original subset
+
+\insertcode{"codes/maximal_xor.cpp"}{An algorithm to find a subset of a given set with maximal bitwise xor using Gaussian elimintaion.}
 
 \end{document}
