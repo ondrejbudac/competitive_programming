@@ -26,11 +26,12 @@
 \lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
 language={C++}, % Detects keywords, comments, strings, functions, etc for the language specified
 %backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
+basewidth  = {.5em,0.5em},
 basicstyle=\footnotesize\ttfamily, % The default font size and style of the code
 breakatwhitespace=false, % If true, only allows line breaks at white space
 breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
 captionpos=b, % Sets the caption position: b for bottom; t for top
-columns=fullflexible,
+columns=fixed,
 commentstyle=\footnotesize\ttfamily\color{DarkGreen}, % \usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
 deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
 %escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
