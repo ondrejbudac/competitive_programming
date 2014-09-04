@@ -18,6 +18,7 @@ int main() {
                                  	// the same as before
 	std::vector<int> vecF(arrA, arrA + sizeof(arrA) / sizeof(int));
    							 							   	// initialization from an array
+	std::vector<int> vecG {1,2,8};  // using initializer_list
    							 							   
   // VECTOR ITERATION
   for (std::vector<int>::iterator it = vecC.begin(); it!= vecC.end(); ++it);
@@ -28,7 +29,7 @@ int main() {
   for (std::vector<int>::reverse_iterator it = vecC.rbegin(); it != vecC.rend(); ++it)
   
   // CAPACITY CONTROL METHODS: max_size, resize, capacity, reserve, shrink_to_fit
-  // VECTOR ACCESS: vecC[0], vecC.at(1), vecC.front(), vecC.back()
+  // VECTOR ACCESS: vecC[0], vecC.at(1), vecC.front(), vecC.back(), *vecC.begin()
   // CHECK IF EMPTY: vecC.empty()
   
   // VECTOR MODIFICATION

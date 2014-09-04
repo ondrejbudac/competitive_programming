@@ -1,4 +1,15 @@
-\documentclass[a4paper, onesided]{article}
+\documentclass[a4paper, oneside]{book}
+
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+{\normalfont\bfseries\filcenter}
+{} %\LARGE\thechapter}
+{1ex}
+{\titlerule[2pt]
+\vspace{2ex}%
+\LARGE\thechapter\quad}
+[\vspace{1ex}%
+{\titlerule[2pt]}]
 
 \addtolength{\oddsidemargin}{-.875in}
 \addtolength{\evensidemargin}{-.875in}
@@ -15,6 +26,7 @@
 \usepackage{listings} % Required for inserting code snippets
 \usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
 \usepackage{enumitem}
+\usepackage{amsmath,amssymb,amsthm}
 %\usepackage{showframe}
 
 
@@ -56,6 +68,7 @@ tabsize=2, % Number of spaces per tab in the code
 
 \begin{document}
 
+\chapter{Graph algorithms}
 %----------------------------------------------------------------------------------------
 \section{Floyd-Warshall algorithm}
 It is a graph analysis algorithm for finding shortest paths in a weighted graph with positive or negative edge weights with no negative cycles.
@@ -84,6 +97,7 @@ One has to reverse the inequality and the addition operation is replaced by the 
 \insertcode{"codes/floyd_warshall_routing.cpp"}{A C++ code for the Floyd-Warshall algorithm used for optimal routing in a constrained network.} 
 
 %----------------------------------------------------------------------------------------
+\chapter{Practical tricks}
 
 \section{Bitmask tricks}
 
@@ -117,6 +131,14 @@ When dealing with 64-bit bitmasks it is necessary to be careful with the types a
 
 %----------------------------------------------------------------------------------------
 
+\section{Using STL}
+This section will feature many tips and tricks and notes about the STL containers and algorithms.
+
+\insertcode{"codes/STL.cpp"}{Introduction to STL}
+
+%----------------------------------------------------------------------------------------
+\chapter{Linear algebra}
+
 \section{Gaussian elimination}
 Given a set of non-negative integers $\{ a_0, a_1, \ldots, a_{N-1} \}$, find a subset that has the highest value when bitwise xor is applied to all its elements.
 We perform a complete Gaussian elimination and then xor the basis vectors to get the maximum.
@@ -124,18 +146,15 @@ We keep the track of the inverse transformation of the basis in bitmasks to easi
 
 \insertcode{"codes/maximal_xor.cpp"}{An algorithm to find a subset of a given set with maximal bitwise xor using Gaussian elimintaion.}
 
-%----------------------------------------------------------------------------------------
-
-\section{Using STL}
-This section will feature many tips and tricks and notes about the STL containers and algorithms.
-
-\insertcode{"codes/STL.cpp"}{Introduction to STL}
-
-
-
-
-
-
+\chapter{Classical problems}
+\section{Longest common subsequence problem}
+The longest common subsequence (LCS) problem is to find the longest subsequence common to all sequences in a set of sequences (often just two).
+When only two sequences $\{ a_0, a_1, \ldots, a_{n-1}\}$ and $\{ b_0, b_1, \ldots, b_{m-1}\}$ are considered, there is a dynamic approach that solves this problem in $O(nm)$.
+If $L(i,j)$ is the length of the longest common subsequence to $\{ a_0, a_1, \ldots, a_{i-1}\}$ and $\{ b_0, b_1, \ldots, b_{j-1}\}$, then we have
+\begin{equation}
+L(i,j) = \begin{cases} L(i-1,j-1) &  \textnormal{if } a_i = b_j\\ \max(L(i,j-1), L(i-1,j)) & \textnormal{otherwise.} \end{cases}
+\end{equation}
+This leads to a simple algorithm that uses only $O(\min(m,n))$ memory.
 
 
 
