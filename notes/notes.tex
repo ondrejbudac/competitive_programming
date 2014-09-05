@@ -146,6 +146,9 @@ We keep the track of the inverse transformation of the basis in bitmasks to easi
 
 \insertcode{"codes/maximal_xor.cpp"}{An algorithm to find a subset of a given set with maximal bitwise xor using Gaussian elimintaion.}
 
+
+%----------------------------------------------------------------------------------------
+
 \chapter{Classical problems}
 \section{Longest common subsequence problem}
 The longest common subsequence (LCS) problem is to find the longest subsequence common to all sequences in a set of sequences (often just two).
@@ -157,6 +160,21 @@ L(i,j) = \begin{cases} L(i-1,j-1) &  \textnormal{if } a_i = b_j\\ \max(L(i,j-1),
 This leads to a simple algorithm that uses only $O(\min(m,n))$ memory.
 
 
+%----------------------------------------------------------------------------------------
 
+\chapter{Data structures}
+\section{Disjoint-sets: Union-find}
+In computing, a disjoint-set data structure, also called a union–find data structure or merge–find set, is a data structure that keeps track of a set of elements partitioned into a number of disjoint (nonoverlapping) subsets. It supports two useful operations:
+\begin{enumerate}
+\item[\bf find] Determine which subset a particular element is in. Find typically returns an item from this set that serves as its ``representative''; by comparing the result of two Find operations, one can determine whether two elements are in the same subset.
+\item[\bf union] Join two subsets into a single subset.
+\end{enumerate}
 
+Suppose that we have $N$ different singletons, each containing one of the numbers $0, 1, \ldots, N-1$. Given is a sequence of pairs of numbers $\{(a_i, b_i)\}_{i=0}^{M-1}$ with $0 <= a_i <  N$ and $0 <= b_i <  N$, we do the following operation: For every $i \in \{0, \ldots, M-1\}$ we pick the two sets containing $a_i$ and $b_i$ and unite them. If one is interested only in the sets at the end of this process, a breadth-first search is a suitable alternative with running time $O(M+N)$. But what if we want to have information about the sets after every operation?
+
+\insertcode{"codes/union_find.cpp"}{A union-find algorithm with only \emph{path compression}.}
+
+\insertcode{"codes/union_find_rank.cpp"}{A union-find algorithm with \emph{path compression} and \emph{union by rank}.}
+
+\subsection{Problem: SRM 632, div 1, 500}
 \end{document}
