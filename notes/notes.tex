@@ -14,6 +14,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 
+\usepackage{hyperref}
 \usepackage{listings} % Required for inserting code snippets
 \usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
 \usepackage{enumitem}
@@ -68,6 +69,8 @@ tabsize=2, % Number of spaces per tab in the code
 
 \begin{document}
 
+\tableofcontents
+
 \chapter{Graph algorithms}
 %----------------------------------------------------------------------------------------
 \section{Floyd-Warshall algorithm}
@@ -95,6 +98,13 @@ The Floyd-Warshall algorithm can be applied to solve this problem with minor mod
 One has to reverse the inequality and the addition operation is replaced by the minimum operation.
 
 \insertcode{"codes/floyd_warshall_routing.cpp"}{A C++ code for the Floyd-Warshall algorithm used for optimal routing in a constrained network.} 
+
+
+\section{Dijkstra's algorithm}
+
+\subsection{Topcoder SRM 181, division 1, hard}
+
+\insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
 
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
@@ -150,16 +160,47 @@ We keep the track of the inverse transformation of the basis in bitmasks to easi
 %----------------------------------------------------------------------------------------
 
 \chapter{Classical problems}
-\section{Longest common subsequence problem}
+\section{Longest common subsequence}
 The longest common subsequence (LCS) problem is to find the longest subsequence common to all sequences in a set of sequences (often just two).
 When only two sequences $\{ a_0, a_1, \ldots, a_{n-1}\}$ and $\{ b_0, b_1, \ldots, b_{m-1}\}$ are considered, there is a dynamic approach that solves this problem in $O(nm)$.
 If $L(i,j)$ is the length of the longest common subsequence to $\{ a_0, a_1, \ldots, a_{i-1}\}$ and $\{ b_0, b_1, \ldots, b_{j-1}\}$, then we have
 \begin{equation}
-L(i,j) = \begin{cases} L(i-1,j-1) &  \textnormal{if } a_i = b_j\\ \max(L(i,j-1), L(i-1,j)) & \textnormal{otherwise.} \end{cases}
+L(i,j) = \begin{cases} L(i-1,j-1) + 1 &  \textnormal{if } a_i = b_j\\ \max(L(i,j-1), L(i-1,j)) & \textnormal{otherwise.} \end{cases}
 \end{equation}
-This leads to a simple algorithm that uses only $O(\min(m,n))$ memory.
+This leads to a simple algorithm that runs in $O(mn)$ time and $O(mn)$ memory requirements. In this version of the algorithm we can extract the LCS from the dynamic table.
+
+\insertcode{"codes/longest_common_subsequence.cpp"}{A dynanamic programming approach to the LCS problem with LCS reconstruction.}
+
+If we only look for the length of the LCS, we don't need to store the whole table and memory requirements are only $O(\min(m,n))$.
+
+\insertcode{"codes/longest_common_subsequence_length.cpp"}{A dynanamic programming approac to find the length of the LCS.}
+
+\subsection{Conversion to longest increasing sequence}
+For any $v$ let $L_v$  be a decreasing sequence of all indices $i$ for which $a_i = v$, that is $L_v= \{ i\in \{n-1, n-2, \ldots, 0\} : a_i = v \}$. We create a new sequence $c = L_{b_1}, L_{b_2}, \ldots, L_{b_{m-1}}$. The longest increasing sequence in $c$ has the same length as the longest common subsequence of $a$ and $b$.
+
+Complexity of this reduction can blow up if $a$ and $b$ use a small alphabet. On the other hand, if $a$ and $b$ have unique elements, the length of $c$ is at most the length of $b$.
+
+\subsection{Codeforces round 201, division 1, problem B}
+\url{http://codeforces.com/problemset/problem/346/B}
+
+\subsection{Codeforces round 264, division 2, problem D}
+\url{http://codeforces.com/problemset/problem/463/D}
+
+\section{Longest increasing subsequence}
+Given a sequence $a_0, \ldots, a_{n-1}$, determine the greatest $L>0$ such that there is an  increasing subsequence $a_{i_1}, \ldots, a_{i_L}$.
+
+An algorithm with time complexity $O(n \log(n))$ proceeds as follows. We iterate with $i\in \{0, \ldots, N-1\}$ and after processing $i$ we keep track of the following quantities:
+\begin{enumerate}
+\item[$L$] the length of the LIC in $a_0, \ldots, a_{i}$.
+\item[$\{ m_j \}_{j=1}^L$] The value $m_j$ stores the index $k$ of the smallest value $a_k$ such that there is an increasing subsequence of length $j$ ending with $a_k$. 
+\item[$\{ p_k \}_{k=0}^i$] The value $p_k$ stores the index of the predcessor of the LIS that ends with $a_k$.
+\end{enumerate}
+
+Note that, at any point in the algorithm, the sequence $a_{m_j}, a_{m_2}, \ldots, a_{m_L}$
+is nondecreasing. This means that when we are processing $a_i$ we can use binary search to find the greatest $m \in \{ 1, ldots, L \}$ such that $a_m < a_i$.
 
 
+\insertcode{"codes/longest_increasing_subsequence.cpp"}{algorithm}
 %----------------------------------------------------------------------------------------
 
 \chapter{Data structures}
@@ -176,5 +217,26 @@ Suppose that we have $N$ different singletons, each containing one of the number
 
 \insertcode{"codes/union_find_rank.cpp"}{A union-find algorithm with \emph{path compression} and \emph{union by rank}.}
 
-\subsection{Problem: SRM 632, div 1, 500}
+\subsection{Problem: SRM 632, division 1, medium}
+Given is a graph with $N \leq 2000$ nodes labelled $0, 1, \ldots, N-1$ and $M \leq 2000$ non-oriented edges labelled $0, 1, \ldots, M-1$. 
+The edge with label $i$ has capacity $3^i$. 
+Find maximal flow between vertices $0$ and $N-1$.
+
+\subsection{Problem: SRM 356, division 2, hard}
+Given are $N\leq 50$ nodes and $M \leq \binom{50}{2}$ edges, while some of the edges have positive weights.
+Find a minimum spanning tree with minimal cost (cost is counting only over the weighted edges) or determine that there is no minimum spanning tree.
+
+\subsection{Problem: SRM 210, division 2, hard}
+Given is an grid $N \times N$ of numbers, $N \leq 50$.
+At the beginning all cells of the grid are white.
+We repeat the following step until all cells of the grid are black:
+
+{\textbf{step:}} Find a white cell with the greatest number. In case of ties we choose 1. cell with smaller $y$-coordinate, 2. cell with smaller $x$-coordinate.
+Color all the cells that are reachable (by moving in the 8 basic directions) from the chosen cell without ever moving to a higher number.
+
+Determine for every step the number of cells that change color from white to black.
+
+
+\section{Suffix trees}
+ 
 \end{document}
