@@ -14,26 +14,48 @@
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
 
-\usepackage{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}
 \usepackage{listings} % Required for inserting code snippets
 \usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
 \usepackage{enumitem}
 \usepackage{amsmath,amssymb,amsthm}
 %\usepackage{showframe}
-
-
 \usepackage{titlesec}
-\titleformat{\chapter}[display]{\normalfont\bfseries\filcenter}{}{1ex}{\titlerule[2pt]\vspace{2ex}\LARGE\thechapter\quad}[\vspace{1ex}{\titlerule[2pt]}]
+\usepackage{lipsum}
+
+% Chapter styles
+\newcommand*{\fancychapterstyle}{%
+  \titleformat{\chapter}[display]{\normalfont\bfseries\filcenter}{}{1ex}{\titlerule[2pt]\vspace{2ex}\LARGE\thechapter\quad}[\vspace{1ex}{\titlerule[2pt]}]
+}
+\newcommand*{\standardchapterstyle}{%
+  \titleformat{\chapter}[display]{\normalfont\bfseries}{}{1ex}{\LARGE}
+}
+
+
+\newcommand*{\titleGM}{\begingroup 
+\hbox{ 
+\hspace*{0.2\textwidth} % Whitespace to the left of the title page
+\rule{1pt}{\textheight} % Vertical line
+\hspace*{0.05\textwidth} % Whitespace between the vertical line and title page text
+\parbox[b]{0.75\textwidth}{ % Paragraph box which restricts text to less than the width of the page
+
+{\noindent\Huge\bfseries Competitive \\[0.5\baselineskip] programming}\\[2\baselineskip] 
+{\large \textit{a collection of algorithms,\\ problems, and solutions}}\\[4\baselineskip] 
+{\Large \textsc{Ondrej Bud\'a\v c}} % Author name
+
+\vspace{0.5\textheight} % Whitespace between the title block and the publisher
+{\noindent \today}\\[\baselineskip] % Publisher and logo
+}}
+\endgroup}
+
+
 
 \definecolor{gray75}{gray}{0.75}
 \newcommand{\hsp}{\hspace{20pt}}
-%\titleformat{\chapter}[hang]{\Huge\bfseries}{\thechapter\hsp\textcolor{gray75}{|}\hsp}{0pt}{\Huge\bfseries}
-
-
-
-\definecolor{DarkGreen}{rgb}{0.0,0.3,0.0} % Comment color
+\definecolor{commentColor}{rgb}{0.0,0.6,0.0} % Comment color
+\definecolor{DarkBlue}{rgb}{0.0,0.0,0.4} % Comment color
+\definecolor{keywordColor}{rgb}{0.7,0.0,0.0} % Comment color
 \definecolor{highlight}{RGB}{255,251,204} % Code highlight color
-
 \lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
 language={C++}, % Detects keywords, comments, strings, functions, etc for the language specified
 %backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
@@ -43,13 +65,13 @@ breakatwhitespace=false, % If true, only allows line breaks at white space
 breaklines=true, % Automatic line breaking (prevents code from protruding outside the box)
 captionpos=b, % Sets the caption position: b for bottom; t for top
 columns=fixed,
-commentstyle=\footnotesize\ttfamily\color{DarkGreen}, % \usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
+commentstyle=\footnotesize\ttfamily\color{commentColor}, % \usefont{T1}{pcr}{m}{sl}\color{DarkGreen}, % Style of comments within the code - dark green courier font
 deletekeywords={}, % If you want to delete any keywords from the current language separate them by commas
 %escapeinside={\%}, % This allows you to escape to LaTeX using the character in the bracket
 firstnumber=1, % Line numbers begin at line 1
 frame=leftline, % Frame around the code box, value can be: none, leftline, topline, bottomline, lines, single, shadowbox
 frameround=ffff, % Rounds the corners of the frame for the top left, top right, bottom left and bottom right positions
-keywordstyle=\footnotesize\ttfamily\color{Green}\bfseries, % Functions are bold and blue
+keywordstyle=\footnotesize\ttfamily\color{keywordColor}\bfseries, % Functions are bold and blue
 morekeywords={__int64}, % Add any functions no included by default here separated by commas
 numbers=left, % Location of line numbers, can take the values of: none, left, right
 numbersep=10pt, % Distance of line numbers from the code box
@@ -69,7 +91,18 @@ tabsize=2, % Number of spaces per tab in the code
 
 \begin{document}
 
+% TITLE PAGE
+\pagestyle{empty} % Removes page numbers
+
+\titleGM
+
+
+
+\standardchapterstyle
+
 \tableofcontents
+
+\fancychapterstyle
 
 \chapter{Graph algorithms}
 %----------------------------------------------------------------------------------------
@@ -108,7 +141,7 @@ One has to reverse the inequality and the addition operation is replaced by the 
 
 \subsection{Topcoder SRM 150, division 1, hard problem}
 
-\url{http://community.topcoder.com/stat?c=problem_statement&pm=1749&rd=4555}
+\insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
 
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
