@@ -19,9 +19,12 @@
 \usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
 \usepackage{enumitem}
 \usepackage{amsmath,amssymb,amsthm}
-%\usepackage{showframe}
 \usepackage{titlesec}
 \usepackage{lipsum}
+\usepackage{marginnote}
+
+% problems
+\newtheorem{problem}[]{Problem}
 
 % Chapter styles
 \newcommand*{\fancychapterstyle}{%
@@ -31,7 +34,7 @@
   \titleformat{\chapter}[display]{\normalfont\bfseries}{}{1ex}{\LARGE}
 }
 
-
+% TITLE PAGE COMMAND
 \newcommand*{\titleGM}{\begingroup 
 \hbox{ 
 \hspace*{0.2\textwidth} % Whitespace to the left of the title page
@@ -48,15 +51,14 @@
 }}
 \endgroup}
 
-
-
-\definecolor{gray75}{gray}{0.75}
-\newcommand{\hsp}{\hspace{20pt}}
+% CUSTOM COLORS
 \definecolor{commentColor}{rgb}{0.0,0.6,0.0} % Comment color
 \definecolor{DarkBlue}{rgb}{0.0,0.0,0.4} % Comment color
 \definecolor{keywordColor}{rgb}{0.7,0.0,0.0} % Comment color
 \definecolor{highlight}{RGB}{255,251,204} % Code highlight color
-\lstdefinestyle{Style1}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
+
+% HIGHLIGHTING STYLE
+\lstdefinestyle{cpp}{ % Define a style for your code snippet, multiple definitions can be made if, for example, you wish to insert multiple code snippets using different programming languages into one document
 language={C++}, % Detects keywords, comments, strings, functions, etc for the language specified
 %backgroundcolor=\color{highlight}, % Set the background color for the snippet - useful for highlighting
 basewidth  = {.5em,0.5em},
@@ -85,7 +87,7 @@ tabsize=2, % Number of spaces per tab in the code
 }
 
 % Create a command to cleanly insert a snippet with the style above anywhere in the document
-\newcommand{\insertcode}[2]{\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1,style=Style1]{#1}\end{itemize}} % The first argument is the script location/filename and the second is a caption for the listing
+\newcommand{\insertcode}[2]{\begin{itemize}\item[]\lstinputlisting[caption=#2,label=#1,style=cpp]{#1}\end{itemize}} % The first argument is the script location/filename and the second is a caption for the listing
 
 %----------------------------------------------------------------------------------------
 
@@ -106,9 +108,9 @@ tabsize=2, % Number of spaces per tab in the code
 
 \chapter{Graph algorithms}
 %----------------------------------------------------------------------------------------
-\section{Floyd-Warshall algorithm}
-It is a graph analysis algorithm for finding shortest paths in a weighted graph with positive or negative edge weights with no negative cycles.
-A single execution of the algorithm will find the lengths (summed weights) of the shortest paths between all pairs of vertices, though it does not return details of the paths themselves.
+\section{Floyd-Warshall algorithm}\label{Floyd-Warshall}
+It is a graph analysis algorithm for finding shortest paths in a weighted graph with positive or negative edge weights with \emph{no negative cycles}.
+A single execution of the algorithm will find the lengths (summed weights) of the shortest paths between all pairs of vertices, though the simple version it does not return details of the paths themselves.
 
 The Floyd-Warshall algorithm compares all possible paths through the graph between each pair of vertices.
 It is able to do this with $\Theta(|V|^3)$ comparisons in a graph. 
@@ -133,15 +135,7 @@ One has to reverse the inequality and the addition operation is replaced by the 
 \insertcode{"codes/floyd_warshall_routing.cpp"}{A C++ code for the Floyd-Warshall algorithm used for optimal routing in a constrained network.} 
 
 
-\section{Dijkstra's algorithm}
-
-\subsection{Topcoder SRM 181, division 1, hard}
-
-\insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
-
-\subsection{Topcoder SRM 150, division 1, hard problem}
-
-\insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
+\section{Dijkstra's algorithm}\label{Dijkstra}
 
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
@@ -151,18 +145,18 @@ One has to reverse the inequality and the addition operation is replaced by the 
 Integers can represent sets. Let $N \geq 0$ and cosider all integers in $\{ 0, 1, 2, \ldots, 2^N-1 \}$. If every place of their binary representation (of length at most $N$) is considered an indicator of an element, they can decode all possible subsets of a set with $N$ elements. For example, if $N=8$ and we consider a set $\{ 0, 1, \ldots, 7\}$, then the number $A=00100101_2$ (binary) encodes the set $\{ 0, 2, 5 \}$. We can do the following set manipulation using bit operations:
 
 \begin{tabular}{ll}
-{\lstinline[style=Style1]!A & B!} & represents set intersection\\
-{\lstinline[style=Style1]!A | B!} & represents set union\\
-{\lstinline[style=Style1]!A ^ B!} & represents set xor (exclusive or)\\
-{\lstinline[style=Style1]!((1 << N) - 1) ^ A!} & represents set complement\\
-{\lstinline[style=Style1]!A & ~(A-1)!} & is the singleton set with the smallest element of {\lstinline[style=Style1]!A!}\\
-{\lstinline[style=Style1]!~(A & (A-1))!} & is a test if the set is singleton (power of $2$)\\
-{\lstinline[style=Style1]!A |= 1 << i!} & adds an element\\
-{\lstinline[style=Style1]!A &= ~(1 << i)!} & removes an element\\
-{\lstinline[style=Style1]+(A & 1 << i) != 0+} & tests if an element is in the set\\
+{\lstinline[style=cpp]!A & B!} & represents set intersection\\
+{\lstinline[style=cpp]!A | B!} & represents set union\\
+{\lstinline[style=cpp]!A ^ B!} & represents set xor (exclusive or)\\
+{\lstinline[style=cpp]!((1 << N) - 1) ^ A!} & represents set complement\\
+{\lstinline[style=cpp]!A & ~(A-1)!} & is the singleton set with the smallest element of {\lstinline[style=cpp]!A!}\\
+{\lstinline[style=cpp]!~(A & (A-1))!} & is a test if the set is singleton (power of $2$)\\
+{\lstinline[style=cpp]!A |= 1 << i!} & adds an element\\
+{\lstinline[style=cpp]!A &= ~(1 << i)!} & removes an element\\
+{\lstinline[style=cpp]+(A & 1 << i) != 0+} & tests if an element is in the set\\
 \end{tabular}
 
-To get the greatest element of {\lstinline[style=Style1]!A!} one can use a function.
+To get the greatest element of {\lstinline[style=cpp]!A!} one can use a function.
 
 \insertcode{"codes/highest_set_bit.cpp"}{Find the highest set bit of a given bitmask.} 
 
@@ -174,7 +168,7 @@ To iterate over all subsets of a set representet by a bitmask we can modify this
 
 \insertcode{"codes/list_subsets_of_bitmask.cpp"}{A bitmask trick to list all the subsets of a set given by a bitmask without recursion.}
 
-When dealing with 64-bit bitmasks it is necessary to be careful with the types and use {\lstinline[style=Style1]!1LL!} instead of {\lstinline[style=Style1]!1!} in all the circumstances. Indeed {\lstinline[style=Style1]!1 << 62 = 0!} and {\lstinline[style=Style1]!1LL << 62 = 4611686018427387904!}.
+When dealing with 64-bit bitmasks it is necessary to be careful with the types and use {\lstinline[style=cpp]!1LL!} instead of {\lstinline[style=cpp]!1!} in all the circumstances. Indeed {\lstinline[style=cpp]!1 << 62 = 0!} and {\lstinline[style=cpp]!1LL << 62 = 4611686018427387904!}.
 
 %----------------------------------------------------------------------------------------
 
@@ -276,4 +270,17 @@ Determine for every step the number of cells that change color from white to bla
 
 \section{Suffix trees}
  
+ 
+\chapter{Examples}
+
+\begin{problem}[topcoder SRM 181, division 1, hard]
+lalalalalal
+\end{problem}
+\subsection{Topcoder SRM 181, division 1, hard problem}
+\marginnote{Dijkstra\\ bitmask}[0cm]
+\insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
+
+\subsection{Topcoder SRM 150, division 1, hard problem}
+
+\insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
 \end{document}
