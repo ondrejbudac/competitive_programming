@@ -29,3 +29,4 @@
 *.tar
 *.dpth
 *.auxlock
+*.test

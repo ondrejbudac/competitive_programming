@@ -25,20 +25,62 @@
 
 \usepackage{collect}
 \definecollection{test}
+\newcounter{problem}\setcounter{problem}{0}
+\newcounter{solution}\setcounter{solution}{0}
+
+%\makeatletter
+%\newenvironment{atest}
+%  {\@nameuse{collect}{test}{}
+%    {}
+%    {}
+%    {}%
+%  }
+%{\@nameuse{endcollect}}
+%% problems
+
 \makeatletter
-\newenvironment{atest}
-  {\@nameuse{collect}{test}{}
-    {}
-    {}
-    {}%
-  }
-{\@nameuse{endcollect}}
+\newenvironment{questionanswer}[3]{
+  \newcommand{\nextpart}{ %
+  		\@nameuse{collect}{test}{}{}{}{}
+	  \phantomsection\label{#3:sol}
+		\refstepcounter{solution}
+  		\par
+		\noindent
+		\textbf{\thesolution. #1.}  \hfill \textbf{[\ #2\ ]} \\
+		\noindent \hphantom{a}\hfill problem statement on page \pageref{#3} \\
+		\par
+  } 
+	  \refstepcounter{problem}
+	  \par
+	  \noindent
+	  \textbf{\theproblem. #1.}\phantomsection\label{#3}  \hfill \textbf{[\ #2\ ]}\\
+	  \noindent \hphantom{a}\hfill solution on page \pageref{#3:sol}\\
+	  \par
+  }{%
+  \@nameuse{endcollect}
+}
 \makeatother
 
-
-
-% problems
-\newcounter{problem}\setcounter{problem}{0}
+%\makeatletter
+%\newenvironment{questionanswer}[3]{
+%  \newcommand{\nextpart}{\@nameuse{collect}{test}{}{}{}{}
+%  \phantomsection\label{#3:sol}
+%  \par
+%  \noindent
+%  \textbf{ {\begingroup\edef\x{\endgroup\noexpand{\theproblem}}\x}. #1.}  \hfill \textbf{[\ #2\ ]}\\
+%  \noindent \hphantom{a}\hfill problem statement on page \pageref{#3}\\
+%  \par
+%  } 
+%	  \refstepcounter{problem}
+%	  \par
+%	  \noindent
+%	  \textbf{\theproblem. #1.}\phantomsection\label{#3}  \hfill \textbf{[\ #2\ ]}\\
+%	  \noindent \hphantom{a}\hfill solution on page \pageref{#3:sol}\\
+%	  \par
+%  }{%
+%  \@nameuse{endcollect}
+%}
+%\makeatother
 
 \newenvironment{problem}[3][\unskip]{%
 \refstepcounter{problem}
@@ -303,24 +345,35 @@ Determine for every step the number of cells that change color from white to bla
  
 \chapter{Examples}
 
-\begin{problem}[topcoder SRM 181, division 1, hard]{\mytag{Dijkstra}, \mytag{bitmask}}{srm:181:1:hard}
-Zadanie.
-\end{problem}
+%\begin{problem}[topcoder SRM 181, division 1, hard]{\mytag{Dijkstra}, \mytag{bitmask}}{srm:181:1:hard}
+%Zadanie.
+%\end{problem}
 
-\begin{atest}
+%\begin{atest}
+%
+%\end{atest}
+
+\begin{questionanswer}{topcoder SRM 181, division 1, hard}{\mytag{Dijkstra}, \mytag{bitmask}}{srm:181:1:hard}
+zadanie
+\nextpart
 \insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
-\end{atest}
+\end{questionanswer}
+
+\begin{questionanswer}{topcoder SRM 150, division 1, hard}{\mytag{Dijkstra}}{srm:150:1:hard}
+zadanie
+\nextpart
+\insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
+\end{questionanswer}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
 \chapter{Solutions}
 
-\includecollection{test}
-
+ \includecollection{test}
+ 
 \chapter{rest}
-\solution{srm:181:1:hard}
-\insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
 
-\subsection{Topcoder SRM 150, division 1, hard problem}
 
-\insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
+%\subsection{Topcoder SRM 150, division 1, hard problem}
+
+%\insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
 \end{document}
