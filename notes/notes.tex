@@ -21,7 +21,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{titlesec}
 \usepackage{lipsum}
-\usepackage{marginnote}
+\usepackage{marginnote}\reversemarginpar
 
 \usepackage{collect}
 \definecollection{test}
@@ -46,7 +46,7 @@
 		\refstepcounter{solution}
   		\par
 		\noindent
-		\textbf{\thesolution. #1.}  \hfill \textbf{[\ #2\ ]} \\
+		\textbf{\thesolution. #1.}  \hfill \textbf{[\ #2\ ]}\\
 		\noindent \hphantom{a}\hfill problem statement on page \pageref{#3} \\
 		\par
   } 
@@ -54,44 +54,25 @@
 	  \par
 	  \noindent
 	  \textbf{\theproblem. #1.}\phantomsection\label{#3}  \hfill \textbf{[\ #2\ ]}\\
-	  \noindent \hphantom{a}\hfill solution on page \pageref{#3:sol}\\
+	  \noindent \hphantom{a}\hfill solution on page \pageref{#3:sol}
 	  \par
   }{%
   \@nameuse{endcollect}
+  \bigskip
 }
 \makeatother
 
-%\makeatletter
-%\newenvironment{questionanswer}[3]{
-%  \newcommand{\nextpart}{\@nameuse{collect}{test}{}{}{}{}
-%  \phantomsection\label{#3:sol}
-%  \par
-%  \noindent
-%  \textbf{ {\begingroup\edef\x{\endgroup\noexpand{\theproblem}}\x}. #1.}  \hfill \textbf{[\ #2\ ]}\\
-%  \noindent \hphantom{a}\hfill problem statement on page \pageref{#3}\\
-%  \par
-%  } 
-%	  \refstepcounter{problem}
-%	  \par
-%	  \noindent
-%	  \textbf{\theproblem. #1.}\phantomsection\label{#3}  \hfill \textbf{[\ #2\ ]}\\
-%	  \noindent \hphantom{a}\hfill solution on page \pageref{#3:sol}\\
-%	  \par
-%  }{%
-%  \@nameuse{endcollect}
-%}
-%\makeatother
 
-\newenvironment{problem}[3][\unskip]{%
-\refstepcounter{problem}
-\par
-\noindent
-\textbf{\theproblem. #1.}\label{#3} \hfill \textbf{[\ #2\ ]}\\ 
-\noindent Solution on page \pageref{#3:sol} %\hyperlink{page}{#3:sol}\\
-\noindent}
-{}
-
-\newcommand{\solution}[1]{\subsubsection*{Solution to problem}\label{#1:sol}}
+%\newenvironment{problem}[3][\unskip]{%
+%\refstepcounter{problem}
+%\par
+%\noindent
+%\textbf{\theproblem. #1.}\label{#3} \hfill \textbf{[\ #2\ ]}\\ 
+%\noindent Solution on page \pageref{#3:sol} %\hyperlink{page}{#3:sol}\\
+%\noindent}
+%{}
+%
+%\newcommand{\solution}[1]{\subsubsection*{Solution to problem}\label{#1:sol}}
 \newcommand{\mytag}[1]{\hyperref[#1]{#1}}
 
 % Chapter styles
@@ -205,7 +186,10 @@ One has to reverse the inequality and the addition operation is replaced by the 
 
 \section{Dijkstra's algorithm}
 \label{Dijkstra}
-%\hypertarget{Dijkstra}{Dijkstra}
+
+
+\section{Max-flow}
+\label{max-flow}
 
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
@@ -307,6 +291,7 @@ is nondecreasing. This means that when we are processing $a_i$ we can use binary
 
 \chapter{Data structures}
 \section{Disjoint-sets: Union-find}
+\label{union-find}
 In computing, a disjoint-set data structure, also called a union–find data structure or merge–find set, is a data structure that keeps track of a set of elements partitioned into a number of disjoint (nonoverlapping) subsets. It supports two useful operations:
 \begin{enumerate}
 \item[\bf find] Determine which subset a particular element is in. Find typically returns an item from this set that serves as its ``representative''; by comparing the result of two Find operations, one can determine whether two elements are in the same subset.
@@ -319,10 +304,6 @@ Suppose that we have $N$ different singletons, each containing one of the number
 
 \insertcode{"codes/union_find_rank.cpp"}{A union-find algorithm with \emph{path compression} and \emph{union by rank}.}
 
-\subsection{Problem: SRM 632, division 1, medium}
-Given is a graph with $N \leq 2000$ nodes labelled $0, 1, \ldots, N-1$ and $M \leq 2000$ non-oriented edges labelled $0, 1, \ldots, M-1$. 
-The edge with label $i$ has capacity $3^i$. 
-Find maximal flow between vertices $0$ and $N-1$.
 
 \subsection{Problem: SRM 356, division 2, hard}
 Given are $N\leq 50$ nodes and $M \leq \binom{50}{2}$ edges, while some of the edges have positive weights.
@@ -354,15 +335,45 @@ Determine for every step the number of cells that change color from white to bla
 %\end{atest}
 
 \begin{questionanswer}{topcoder SRM 181, division 1, hard}{\mytag{Dijkstra}, \mytag{bitmask}}{srm:181:1:hard}
-zadanie
+You play a game with $N \leq 15$ bosses. 
+At the beginning you have a weapon that takes $1$ life per shot from any boss.
+For every boss $i \in \{0, \ldots, N-1\}$ you know that his gun takes $a_{ij}$ life per shot from boss $0 \in \{ 1, \ldots, N-1\}$.
+When life points of a boss drop to $0$ or less, you defeated him and you have (and can use) his weapon.
+Determine the order in which you kill the bosses so that the \emph{number of shots you shoot is minimized}.
 \nextpart
 \insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
 \end{questionanswer}
 
 \begin{questionanswer}{topcoder SRM 150, division 1, hard}{\mytag{Dijkstra}}{srm:150:1:hard}
-zadanie
+You are given a path of a robot as a string containing only characters $L$ (turn $60$ degrees left), $R$ (turn $60$ degrees right), and $F$ (move $1$ meter forward).
+A second robot start in the exact position (and rotation) as the first robot.
+Its goal is to get to the final point of the first robot by going only on his tracks (no matter which direction).
+For the second robot it takes $3$ seconds to turn left or right by $60$ degrees.
+Going forward one meter takes $4$ seconds and two meters take $8$ seconds, but for $n>2$, the second robot can go $n$ meters forward (without turning) in $8+2(n-2)$ seconds.
+Calculate the minimum time needed for the second robot to get to the destination.
 \nextpart
 \insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
+\end{questionanswer}
+
+\begin{questionanswer}{topcoder SRM 632, division 1, medium}{\mytag{union-find}, \mytag{max-flow}}{srm:632:1:medium}
+Given is a graph with $N \leq 2000$ nodes labelled $0, 1, \ldots, N-1$ and $M \leq 2000$ non-oriented edges labelled $0, 1, \ldots, M-1$. 
+The edge with label $i$ has capacity $3^i$. 
+Find maximal flow between vertices $0$ and $N-1$.
+\nextpart
+\insertcode{"codes/CandyCupRunningCompetition.cpp"}{todo}
+\end{questionanswer}
+
+\begin{questionanswer}{topcoder SRM 631, division 1, medium}{greedy}{srm:631:1:medium}
+At position $p_i \in \mathbb{Z}$ on a line we have $c_i$ cats for $0 \leq i \leq N \leq 1000$. 
+Every minute, each cat that sitting at the point $p$ has three choices: stay at $p$, move to $p+1$, move to $p-1$.
+Return minimum possible number of points where more than one cat sits after $T$ minutes.
+\nextpart
+\insertcode{"codes/CatsOnTheLineDiv1.cpp"}{todo}
+\end{questionanswer}
+
+\begin{questionanswer}{topcoder SRM 630, division 1, medium}{greedy}{srm:630:1:medium}
+\nextpart
+\insertcode{"codes/SuffixArrayDiv1.cpp"}{todo}
 \end{questionanswer}
 
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
