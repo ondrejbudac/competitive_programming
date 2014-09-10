@@ -23,8 +23,34 @@
 \usepackage{lipsum}
 \usepackage{marginnote}
 
+\usepackage{collect}
+\definecollection{test}
+\makeatletter
+\newenvironment{atest}
+  {\@nameuse{collect}{test}{}
+    {}
+    {}
+    {}%
+  }
+{\@nameuse{endcollect}}
+\makeatother
+
+
+
 % problems
-\newtheorem{problem}[]{Problem}
+\newcounter{problem}\setcounter{problem}{0}
+
+\newenvironment{problem}[3][\unskip]{%
+\refstepcounter{problem}
+\par
+\noindent
+\textbf{\theproblem. #1.}\label{#3} \hfill \textbf{[\ #2\ ]}\\ 
+\noindent Solution on page \pageref{#3:sol} %\hyperlink{page}{#3:sol}\\
+\noindent}
+{}
+
+\newcommand{\solution}[1]{\subsubsection*{Solution to problem}\label{#1:sol}}
+\newcommand{\mytag}[1]{\hyperref[#1]{#1}}
 
 % Chapter styles
 \newcommand*{\fancychapterstyle}{%
@@ -135,12 +161,15 @@ One has to reverse the inequality and the addition operation is replaced by the 
 \insertcode{"codes/floyd_warshall_routing.cpp"}{A C++ code for the Floyd-Warshall algorithm used for optimal routing in a constrained network.} 
 
 
-\section{Dijkstra's algorithm}\label{Dijkstra}
+\section{Dijkstra's algorithm}
+\label{Dijkstra}
+%\hypertarget{Dijkstra}{Dijkstra}
 
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
 
 \section{Bitmask tricks}
+\label{bitmask}
 
 Integers can represent sets. Let $N \geq 0$ and cosider all integers in $\{ 0, 1, 2, \ldots, 2^N-1 \}$. If every place of their binary representation (of length at most $N$) is considered an indicator of an element, they can decode all possible subsets of a set with $N$ elements. For example, if $N=8$ and we consider a set $\{ 0, 1, \ldots, 7\}$, then the number $A=00100101_2$ (binary) encodes the set $\{ 0, 2, 5 \}$. We can do the following set manipulation using bit operations:
 
@@ -270,14 +299,25 @@ Determine for every step the number of cells that change color from white to bla
 
 \section{Suffix trees}
  
+ % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
  
 \chapter{Examples}
 
-\begin{problem}[topcoder SRM 181, division 1, hard]
-lalalalalal
+\begin{problem}[topcoder SRM 181, division 1, hard]{\mytag{Dijkstra}, \mytag{bitmask}}{srm:181:1:hard}
+Zadanie.
 \end{problem}
-\subsection{Topcoder SRM 181, division 1, hard problem}
-\marginnote{Dijkstra\\ bitmask}[0cm]
+
+\begin{atest}
+\insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
+\end{atest}
+
+% % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+\chapter{Solutions}
+
+\includecollection{test}
+
+\chapter{rest}
+\solution{srm:181:1:hard}
 \insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
 
 \subsection{Topcoder SRM 150, division 1, hard problem}
