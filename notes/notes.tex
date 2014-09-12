@@ -1,19 +1,18 @@
 \documentclass[a4paper, twoside,openany]{book}
 
 
-
+% % GEOMETRY
 %\addtolength{\oddsidemargin}{-.875in}
 \addtolength{\evensidemargin}{-1.2in}
 \addtolength{\textwidth}{1.2in} %{1.75in}
 \addtolength{\topmargin}{-.875in}
 \addtolength{\textheight}{1.75in}
-
 \setlength{\parskip}{0.3em}
 \setlength{\parindent}{0pt}
+
 %----------------------------------------------------------------------------------------
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}
-
 \usepackage[colorlinks=true,linkcolor=blue]{hyperref}
 \usepackage{listings} % Required for inserting code snippets
 \usepackage[usenames,dvipsnames]{color} % Required for specifying custom colors and referring to colors by name
@@ -22,21 +21,12 @@
 \usepackage{titlesec}
 \usepackage{lipsum}
 \usepackage{marginnote}\reversemarginpar
-
 \usepackage{collect}
+
+% COLLECTION OF SOLUTIONS - AT THE END
 \definecollection{test}
 \newcounter{problem}\setcounter{problem}{0}
 \newcounter{solution}\setcounter{solution}{0}
-
-%\makeatletter
-%\newenvironment{atest}
-%  {\@nameuse{collect}{test}{}
-%    {}
-%    {}
-%    {}%
-%  }
-%{\@nameuse{endcollect}}
-%% problems
 
 \makeatletter
 \newenvironment{questionanswer}[3]{
