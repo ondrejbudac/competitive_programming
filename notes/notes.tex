@@ -325,22 +325,25 @@ Determine for every step the number of cells that change color from white to bla
 %\end{atest}
 
 \begin{questionanswer}{topcoder SRM 181, division 1, hard}{\mytag{Dijkstra}, \mytag{bitmask}}{srm:181:1:hard}
-You play a game with $N \leq 15$ bosses. 
-At the beginning you have a weapon that takes $1$ life per shot from any boss.
-For every boss $i \in \{0, \ldots, N-1\}$ you know that his gun takes $a_{ij}$ life per shot from boss $0 \in \{ 1, \ldots, N-1\}$.
-When life points of a boss drop to $0$ or less, you defeated him and you have (and can use) his weapon.
+In a computer game, there are $N \leq 15$ bosses numbered $\{0, \ldots, N-1\}$ to defeat.
+You can fight them one by one in any order you want. 
+Boss number $i$ has $h_i$ life points (LP).
+At the beginning you have a universal weapon that takes $1$ LP per shot from any boss.
+For every boss $i$ you know that his gun takes $a_{ij} \geq 0$ LP per shot from boss $j \in \{ 1, \ldots, N-1\}$.
+When life points of a boss drop to $0$ or less, you defeated him and you add his weapon to your inventory.
+Your inventory is unlimited and you can use any weapon you have.
 Determine the order in which you kill the bosses so that the \emph{number of shots you shoot is minimized}.
 \nextpart
 \insertcode{"codes/Dijkstra_SRM181div1hard.cpp"}{todo}
 \end{questionanswer}
 
 \begin{questionanswer}{topcoder SRM 150, division 1, hard}{\mytag{Dijkstra}}{srm:150:1:hard}
-You are given a path of a robot as a string containing only characters $L$ (turn $60$ degrees left), $R$ (turn $60$ degrees right), and $F$ (move $1$ meter forward).
-A second robot start in the exact position (and rotation) as the first robot.
-Its goal is to get to the final point of the first robot by going only on his tracks (no matter which direction).
-For the second robot it takes $3$ seconds to turn left or right by $60$ degrees.
-Going forward one meter takes $4$ seconds and two meters take $8$ seconds, but for $n>2$, the second robot can go $n$ meters forward (without turning) in $8+2(n-2)$ seconds.
-Calculate the minimum time needed for the second robot to get to the destination.
+You are given a path of the robot Alex as a string containing only characters $L$ (turn $60$ degrees left), $R$ (turn $60$ degrees right), and $F$ (move $1$ meter forward).
+When Alex has finished his movements, the robot Boris starts in the exact position (and rotation) as Alex.
+Boris' goal is to get to Alex in such a way, that whenever he is moving forward, he must be in Alex's tracks.
+It takes $3$ seconds to turn left or right by $60$ degrees.
+Going forward one meter takes $4$ seconds, going forward two meters takes $8$ seconds, but for $n>2$ Boris can use the momentum and move $n$ meters forward (without turning) in only $8+2(n-2)$ seconds.
+Calculate the minimal time Boris needs to get to the final destination of Alex.
 \nextpart
 \insertcode{"codes/Dijkstra_SRM150div1hard.cpp"}{todo}
 \end{questionanswer}
@@ -349,45 +352,60 @@ Calculate the minimum time needed for the second robot to get to the destination
 Given is a graph with $N \leq 2000$ nodes labelled $0, 1, \ldots, N-1$ and $M \leq 2000$ non-oriented edges labelled $0, 1, \ldots, M-1$. 
 The edge with label $i$ has capacity $3^i$. 
 Find maximal flow between vertices $0$ and $N-1$.
+Return the result modulo $1000000007$.
 \nextpart
 \insertcode{"codes/CandyCupRunningCompetition.cpp"}{todo}
 \end{questionanswer}
 
 \begin{questionanswer}{topcoder SRM 631, division 1, medium}{greedy}{srm:631:1:medium}
-At position $p_i \in \mathbb{Z}$ on a line we have $c_i$ cats for $0 \leq i \leq N \leq 1000$. 
-Every minute, each cat that sitting at the point $p$ has three choices: stay at $p$, move to $p+1$, move to $p-1$.
-Return minimum possible number of points where more than one cat sits after $T$ minutes.
+Given is $N \in \mathbb{N}$ with $N \leq 1000$ and numbers $p_i \in \mathbb{Z}, c_i \in \mathbb{N}_0$ for  $i \in \{0, \ldots, N-1\}$.
+At position $p_i$ on a line we have $c_i$ cats for every $i \in \{0, \ldots, N-1\}$.
+Every minute, each cat sitting at a point $p$ has three choices: (1) stay at $p$, (2) move to $p+1$, (3) move to $p-1$.
+Return minimal possible number of points on a line where more than one cat sits after $T \in \mathbb{N}$ minutes.
 \nextpart
 \insertcode{"codes/CatsOnTheLineDiv1.cpp"}{todo}
 \end{questionanswer}
 
 \begin{questionanswer}{topcoder SRM 630, division 1, medium}{greedy}{srm:630:1:medium}
+Given is a suffix array of length $N \leq 50$.
+Return the smallest possible number of different characters that can produce a string with this suffix array.
 \nextpart
 \insertcode{"codes/SuffixArrayDiv1.cpp"}{todo}
 \end{questionanswer}
 
 \begin{questionanswer}{codeforces round 265, division 1, A}{greedy}{cf:265:1:A}
-todo
+Given is $p \in \{1, \ldots, 26\}$.
+A string is called tolerable if it contains only one of the first $p$ letters of the English alphabet and it doesn't contain any palindromatic substring of length $2$ or more.
+Given a tolerable string $s$ of length $n \leq 1000$, find the lexicographically next tolerable string of the same length or state that such string does not exist.
 \nextpart
 \insertcode{"codes/codeforces265div1A.cpp"}{todo}
 \end{questionanswer}
 
 \begin{questionanswer}{codeforces round 265, division 1, B}{greedy}{cf:265:1:B}
-todo
+Given is a table $8 \times 3$ of integers less than $10^6$ in absolute value. 
+Can one permute every line ($8$ lines), so that the triplets in lines can be coordinates of vertices of a cube in $\mathbb{R}^3$?
+Edges of such a cube do not have to be parallel to the axes.
+If yes, write one such permutation.
 \nextpart
 \insertcode{"codes/codeforces265div1B.cpp"}{todo}
 \end{questionanswer}
 
-\begin{questionanswer}{codeforces round 265, division 1, C}{modulo, dp}{cf:265:1:B}
-todo
+\begin{questionanswer}{codeforces round 265, division 1, C}{modulo, dp}{cf:265:1:C}
+
 \nextpart
 \insertcode{"codes/codeforces265div1C.cpp"}{todo}
 \end{questionanswer}
 
-\begin{questionanswer}{codeforces round 266, division 1, D}{modulo, dp}{cf:266:1:D}
+\begin{questionanswer}{codeforces round 266, division 2, D}{modulo, dp}{cf:266:1:D}
 todo
 \nextpart
 \insertcode{"codes/codeforces266div2D.cpp"}{todo}
+\end{questionanswer}
+
+\begin{questionanswer}{codeforces round 266, division 2, E}{dfs, \mytag{union-find}, queries}{cf:266:2:E}
+todo
+\nextpart
+\insertcode{"codes/codeforces266div2E.cpp"}{todo}
 \end{questionanswer}
 
 
