@@ -181,6 +181,32 @@ One has to reverse the inequality and the addition operation is replaced by the 
 \section{Max-flow}
 \label{max-flow}
 
+\section{Closure problem}
+A closure of a directed graph is a set of vertices with no outgoing edges. 
+The \emph{closure problem} is the task of finding the maximum-weight\footnote{If one is interested in the minimum-weight closure, we can just look for the maximum-weight closure on the transpose graph of $G$.} closure in directed graph $G$ with weighted vertices $w : V \rightarrow \mathbb R$. 
+It may be solved in polynomial time using a reduction to the maximum flow problem. 
+
+\paragraph{Condensation.} 
+If two vertices of the graph belong to the same strongly connected component, they must behave the same as each other with respect to all closures: it is not possible for a closure to contain one vertex without containing the other. 
+For this reason, the input graph to a closure problem may be replaced by its condensation, in which every strongly connected component is replaced by a single vertex. 
+The condensation is always a directed acyclic graph.
+
+\paragraph{Reduction to maximal flow.}
+A maximum-weight closure may be obtained from $G$ by solving a maximum flow problem on a graph $H$ constructed from $G$ by adding to it two additional vertices $s$ and $t$. 
+For each vertex $v$ in $G$, the augmented graph $H$ contains
+\begin{itemize}
+\item an edge from $s$ to $v$ with capacity equal to $w(v)$, if $w(v) > 0$,
+\item an edge from $v$ to $t$ with capacity equal to $-w(v)$, if $w(v) < 0$.
+\end{itemize}
+For every edge $uv$ in $G$, the augmented graph $H$ contains
+\begin{itemize}
+\item an edge $uv$ with infinite capacity.
+\end{itemize}
+A minimum cut separating $s$ from $t$ in this graph cannot have any edges of $G$ passing in the forward direction across the cut: a cut with such an edge would have infinite capacity and would not be minimum. 
+Therefore, the set of vertices on the same side of the cut as $s$ automatically forms a closure $C$. 
+The capacity of the cut equals the weight of all non-negative vertices minus the weight of the vertices in $C$, which is minimized when the weight of $C$ is maximized. 
+By the max-flow min-cut theorem, a minimum cut, and the optimal closure derived from it, can be found by solving a maximum flow problem.
+
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
 
@@ -406,6 +432,15 @@ todo
 todo
 \nextpart
 \insertcode{"codes/codeforces266div2E.cpp"}{todo}
+\end{questionanswer}
+
+\begin{questionanswer}{topcoder SRM 633, division 1, easy}{greedy, triangle inequality}{srm:633:1:easy}
+Given is a point $(x,0)$, where $|x| \leq 10^9$ and $x \in \mathbb{N}$.
+A frog starts at the point $(0,0)$ and it wants to get to the point $(x,0)$ using as few jumps as possible.
+You are given a sequence of positive integers $d_0, d_1, \ldots, d_{N-1}$, where $1 \leq N \leq 50$.
+The frog can jump in any direction but her $i$-th jump (starting from $i=0$) must have length $d_{i \% N}$.
+\nextpart
+\insertcode{"codes/PeriodicJumping.cpp"}{todo}
 \end{questionanswer}
 
 
