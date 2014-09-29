@@ -207,6 +207,21 @@ Therefore, the set of vertices on the same side of the cut as $s$ automatically 
 The capacity of the cut equals the weight of all non-negative vertices minus the weight of the vertices in $C$, which is minimized when the weight of $C$ is maximized. 
 By the max-flow min-cut theorem, a minimum cut, and the optimal closure derived from it, can be found by solving a maximum flow problem.
 
+\section{Minimum spanning tree}
+Kruskal's algorithm is a greedy algorithm in graph theory that finds a minimum spanning tree for a connected weighted graph. 
+This means it finds a subset of the edges that forms a tree that includes every vertex, where the total weight of all the edges in the tree is minimized. 
+If the graph is not connected, then it finds a minimum spanning forest (a minimum spanning tree for each connected component).
+
+\begin{itemize}
+\item create a forest F (a set of trees), where each vertex in the graph is a separate tree
+\item create a set S containing all the edges in the graph
+\item while S is nonempty and F is not yet spanning
+\begin{itemize}
+\item remove an edge with minimum weight from S
+\item if that edge connects two different trees, then add it to the forest, combining two trees into a single tree
+\end{itemize}
+\end{itemize}
+
 %----------------------------------------------------------------------------------------
 \chapter{Practical tricks}
 
@@ -336,9 +351,23 @@ Color all the cells that are reachable (by moving in the 8 basic directions) fro
 Determine for every step the number of cells that change color from white to black.
 
 
-\section{Suffix trees}
+
  
  % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % %
+ 
+ \chapter{Strings}
+string matching, suffixes, prefixed, \ldots
+ 
+ \section{Z algorithm}
+ Given a string $S$ of length $n$, the Z algorithm produces an array $Z$, where $Z[i]$ is the length of the longest substring starting from $S[i]$, which is also a prefix of $S$.
+ Note that $Z[i] = 0$ means tat $S[0] \neq S[i]$.
+ 
+ \insertcode{"codes/Zalgorithm.cpp"}{todo}
+ 
+ A standard application of the Z alorithm is for the string matching.
+ 
+ 
+\section{Suffix trees}
  
 \chapter{Examples}
 
